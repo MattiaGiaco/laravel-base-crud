@@ -2,7 +2,15 @@
 
 @section('content')
 
+
 <main class="container">
+
+  @if (session('deleted'))
+    <div class="alert alert-danger" role="alert">
+      {{session('deleted')}}
+    </div>
+ @endif
+
   <h1>Comics</h1>
 
   <table class="table table-dark table-striped">
@@ -28,7 +36,7 @@
           <td><a href="{{route('comics.show', $comic)}}" class="btn btn-success">SHOW</a></td>
           <td><a href="{{route('comics.edit', $comic)}}" class="btn btn-primary">EDIT</a></td>
           <td>
-            <form action="{{route('comics.destroy', $comic)}}" method="POST">
+            <form onsubmit="return confirm('Vuoi eliminare {{$comic->title}}?')" action="{{route('comics.destroy', $comic)}}" method="POST">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger">DELETE</button>
